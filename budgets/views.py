@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from .serializers import UserSerializer, BankSerializer, AccountSerializer
 from .models import Bank, Account
 from .permissions import IsOwnerOrReadOnly
@@ -28,6 +29,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, 
                           IsOwnerOrReadOnly,)
 
